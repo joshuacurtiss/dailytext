@@ -1,0 +1,23 @@
+{
+  "name": "dailytext",
+  "version": "0.1.0",
+  "description": "Loads the Daily Text from WOL site and outputs text.",
+  "main": "dailytext.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Josh Curtiss <josh@curtiss.me>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "request": "^2.78.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshuacurtiss/dailytext.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joshuacurtiss/dailytext/issues"
+  },
+  "homepage": "https://github.com/joshuacurtiss/dailytext/wiki"
+}
