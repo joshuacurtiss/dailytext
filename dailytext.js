@@ -5,7 +5,7 @@ var fs=require("fs");
 const longpause="[[slnc 1750]]";
 const medpause="[[slnc 800]]";
 const shortpause="[[slnc 400]]"; 
-const url="http://wol.jw.org/en/wol/h/r1/lp-e";
+const url="http://wol.jw.org/en/wol/dt/r1/lp-e/";
 
 const scripReplacements=[
     {short:/Gen\.\s/gi,long:"Genesis"},
@@ -135,36 +135,32 @@ function handleRequest(err,resp,html)
     var $=cheerio.load(html);
     var today=new Date();
     // Loop thru all the "tabContent" divs, containing articles, but there will be more than one.
-    $("div.tabContent").map(function(idx,item){
+    $(".docClass-DailyText").map(function(idx,item){
         var $article=$(this);
-        var thisDate=new Date($article.attr("data-date").substr(0,10) + "T10:10:10.010Z");
-        // Find and act on just the one set for today's date.
-        if( thisDate.toLocaleDateString()==today.toLocaleDateString() )
-        {
-            // Retrieve the "date" text
-            var date=$article.find("header").text().trim();
-            // Retrieve the "theme scripture" text, then 1) Use speakable scripture, 2) Pause before citation, 3) Pause between chapter:verse.
-            var scrip=$article.find(".themeScrp").text().trim();
-            scrip=replaceScriptures(scrip);
-            scrip=scrip.replace("—",` ${medpause} `);
-            scrip=scrip.replace(/(\d+):(\d+)/g,"$1[[slnc 200]]$2");
-            // Retrieve and calculate the reference material, making it speakable.
-            var origref=$article.find("a em").last().parent().text();
-            var speechref=calcReference(origref);
-            // Retrieve body of text and tweak it...
-            var body=$article.find(".bodyTxt").text().trim();
-            body=replaceScriptures(body);                                               // Make scriptures speakable
-            body=body.replace(/\)\s/g,`). ${shortpause} `);                             // Pause after citations
-            body=body.replace(/—/g,` ${shortpause} `);                                  // Pause for dashes
-            body=body.replace(origref,`${longpause} Reference material: ${speechref}`); // Replace the reference material speakable text
-            body=body.replace(/(\d+)\-(\d+)/g,"$1 through $2");                         // Use "A thru B" for places where paragraphs or verses have a range like 1-3. 
-            body=body.replace(/(\d+):(\d+)/g,"$1[[slnc 125]]$2");                       // Pause between chapter:verse or article:paragraph. 
-            // Output the speakable text!
-            console.log(`Daily text for ${date}.\n${longpause}\nTheme scripture. ${medpause} ${scrip}\n${longpause}\n${body}`);
-        }
+        // Retrieve the "date" text
+        var date=$article.find("header").text().trim();
+        // Retrieve the "theme scripture" text, then 1) Use speakable scripture, 2) Pause before citation, 3) Pause between chapter:verse.
+        var scrip=$article.find(".themeScrp").text().trim();
+        scrip=replaceScriptures(scrip);
+        scrip=scrip.replace("—",` ${medpause} `);
+        scrip=scrip.replace(/(\d+):(\d+)/g,"$1[[slnc 200]]$2");
+        // Retrieve and calculate the reference material, making it speakable.
+        var origref=$article.find("a em").last().parent().text();
+        var speechref=calcReference(origref);
+        // Retrieve body of text and tweak it...
+        var body=$article.find(".bodyTxt").text().trim();
+        body=replaceScriptures(body);                                               // Make scriptures speakable
+        body=body.replace(/\)\s/g,`). ${shortpause} `);                             // Pause after citations
+        body=body.replace(/—/g,` ${shortpause} `);                                  // Pause for dashes
+        body=body.replace(origref,`${longpause} Reference material: ${speechref}`); // Replace the reference material speakable text
+        body=body.replace(/(\d+)\-(\d+)/g,"$1 through $2");                         // Use "A thru B" for places where paragraphs or verses have a range like 1-3. 
+        body=body.replace(/(\d+):(\d+)/g,"$1[[slnc 125]]$2");                       // Pause between chapter:verse or article:paragraph. 
+        // Output the speakable text!
+        console.log(`Daily text for ${date}.\n${longpause}\nTheme scripture. ${medpause} ${scrip}\n${longpause}\n${body}`);
     });
 }
 
 // Kick off the process by request the URL. For testing, read and pass in a test HTML file.
-request(url,handleRequest);
+var d=new Date().toISOString().slice(0,10).replace(/\-/g,"/"); // Formats in yyyy/mm/dd which is how it appears in the URL.
+request(url+d,handleRequest);
 //var htmlString = fs.readFileSync('test.htm').toString(); handleRequest(null,null,htmlString);
