@@ -27,7 +27,7 @@ function createArticleFromHTML(html)
 function handleResponse(err,resp,html)
 {
     var article=createArticleFromHTML(html);
-    console.log(article.toSpokenString());
+    console.log(article.toString());
 }
 
 // Kick off the process by request the URL. For testing, read and pass in a test HTML file.
