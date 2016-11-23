@@ -26,7 +26,11 @@ function createArticleFromHTML(html)
 function handleResponse(err,resp,html)
 {
     var article=createArticleFromHTML(html);
-    console.log(article.toString());
+    var ttsEngine=process.argv.length>2?process.argv[2]:"";
+    if( ttsEngine!="" ) {
+        article.ttsEngine=ttsEngine;
+        console.log(article.toSpokenString());
+    } else console.log(article.toString());
 }
 
 // Kick off the process by request the URL. For testing, read and pass in a test HTML file.
