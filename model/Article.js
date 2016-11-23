@@ -3,13 +3,9 @@ class Article {
     constructor( date, scripture, content, reference ) {
         this.date=date;
         this.scripture=scripture;
-        this.content=content.replace(reference,"").trim();
         this.reference=reference;
-        this._ttsengine="SAY";
-        this._spokenDate="";
-        this._spokenScripture="";
-        this._spokenContent="";
-        this._spokenReference="";
+        this.content=content.replace(reference,"");
+        this.ttsEngine="SAY";
     }
 
     get ttsEngine() {
@@ -22,11 +18,23 @@ class Article {
         else throw "No engine is registered by that name.";
     }
 
+    get date() {return this._date}
+    set date(text) {
+        this._date=text.trim();
+        this._spokenDate="";
+    }
+
     get spokenDate() {
         if(!this._spokenDate.length) {
             this._spokenDate=this.date;
         }
         return this._spokenDate;
+    }
+
+    get scripture() {return this._scripture}
+    set scripture(text) {
+        this._scripture=text.trim();
+        this._spokenScripture="";
     }
 
     get spokenScripture() {
@@ -44,6 +52,12 @@ class Article {
         return this._spokenScripture;
     }
 
+    get content() {return this._content}
+    set content(text) {
+        this._content=text.trim();
+        this._spokenContent="";
+    }
+
     get spokenContent() {
         if(!this._spokenContent.length) {
             const SPEECH=Article.SPEECH[this.ttsEngine];
@@ -56,6 +70,12 @@ class Article {
             this._spokenContent=txt;
         }
         return this._spokenContent;
+    }
+
+    get reference() {return this._reference}
+    set reference(text) {
+        this._reference=text.trim();
+        this._spokenReference="";
     }
 
     get spokenReference() {

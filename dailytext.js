@@ -15,10 +15,10 @@ function createArticleFromHTML(html)
     $(".docClass-DailyText").map(function(idx,item){
         var $articleHTML=$(this);
         // Retrieve the raw text and instantiate and Article object
-        var date=$articleHTML.find("header").text().trim();
-        var scrip=$articleHTML.find(".themeScrp").text().trim();
+        var date=$articleHTML.find("header").text();
+        var scrip=$articleHTML.find(".themeScrp").text();
         var ref=$articleHTML.find("a em").last().parent().text();
-        var body=$articleHTML.find(".bodyTxt").text().trim();
+        var body=$articleHTML.find(".bodyTxt").text();
         article=new Article(date,scrip,body,ref);
     });
     return article;
