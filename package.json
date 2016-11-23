@@ -1,10 +1,11 @@
 {
   "name": "dailytext",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Loads the Daily Text from WOL site and outputs text.",
   "main": "dailytext.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=production node dailytext",
+    "test": "NODE_ENV=development node dailytext"
   },
   "author": "Josh Curtiss <josh@curtiss.me>",
   "license": "GPL-3.0",
