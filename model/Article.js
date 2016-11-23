@@ -91,6 +91,12 @@ Article.SPEECH={
         "MEDIUMPAUSE": "[[slnc 800]]",
         "SHORTPAUSE": "[[slnc 400]]",
         "TINYPAUSE": "[[slnc 200]]" 
+    },
+    "SSML": {
+        "LONGPAUSE": "<break time='1550ms'/>",
+        "MEDIUMPAUSE": "<break time='750ms'/>",
+        "SHORTPAUSE": "<break time='400ms'/>",
+        "TINYPAUSE": "<break time='180ms'/>" 
     }
 };
 Article.SCRIPTURENAMES=[
