@@ -17,9 +17,8 @@ function createArticleFromHTML(html)
         // Retrieve the raw text and instantiate and Article object
         var date=$articleHTML.find("header").text();
         var scrip=$articleHTML.find(".themeScrp").text();
-        var ref=$articleHTML.find("a em").last().parent().text();
         var body=$articleHTML.find(".bodyTxt").text();
-        article=new Article(date,scrip,body,ref);
+        article=new Article(date,scrip,body);
     });
     return article;
 }

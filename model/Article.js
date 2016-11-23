@@ -1,10 +1,9 @@
 class Article {
     
-    constructor( date, scripture, content, reference ) {
+    constructor( date, scripture, content ) {
         this.date=date;
         this.scripture=scripture;
-        this.reference=reference;
-        this.content=content.replace(reference,"");
+        this.content=content;
         this.ttsEngine="SAY";
     }
 
@@ -54,7 +53,8 @@ class Article {
 
     get content() {return this._content}
     set content(text) {
-        this._content=text.trim();
+        this.reference=findReferenceInContent(text.trim());
+        this._content=text.replace(this.reference,"").trim();
         this._spokenContent="";
     }
 
@@ -197,6 +197,13 @@ function calcScriptureNames(text) {
         text=text.replace(rep.short,rep.long+" ");
     }
     return text;
+}
+
+// Receives a body of content and finds the reference material text
+function findReferenceInContent(txt) {
+    var re=/\b.\s(w\d{2}\b.[\d\s:,/\-]{6,})$/igm;
+    var findit=txt.split(re);
+    return findit.length>1?findit[1]:"";
 }
 
 // Calculates speakable version of reference material
