@@ -25,6 +25,10 @@ function createArticleFromHTML(html)
 
 function handleResponse(err,resp,html)
 {
+    if (err) {
+        console.error('Seems You have no internet connection :( Internet is Required to grab the HTML!');
+        return;
+    }
     var article=createArticleFromHTML(html);
     var ttsEngine=process.argv.length>2?process.argv[2]:"";
     if( ttsEngine!="" ) {
